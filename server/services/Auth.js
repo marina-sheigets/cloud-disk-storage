@@ -58,6 +58,27 @@ class Auth {
 			res.send('Something went wrong');
 		}
 	}
+
+	async auth(req, res) {
+		try {
+			const user = await User.findOne({ _id: req.user.id });
+
+			const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
+			return res.json({
+				token,
+				user: {
+					id: user.id,
+					email: user.email,
+					diskSpace: user.diskSpace,
+					files: user.files,
+					usedSpace: user.usedSpaces,
+				},
+			});
+		} catch (error) {
+			console.log(e);
+			res.send('Something went wrong');
+		}
+	}
 }
 
 export default new Auth();

@@ -1,6 +1,7 @@
 import Router from 'express';
 import Auth from '../services/Auth.js';
 import { check } from 'express-validator';
+import authMiddleware from '../middleware/auth.js';
 
 const router = Router();
 
@@ -14,5 +15,7 @@ router.post(
 );
 
 router.post('/login', Auth.login);
+
+router.get('/auth', authMiddleware, Auth.auth);
 
 export default router;
