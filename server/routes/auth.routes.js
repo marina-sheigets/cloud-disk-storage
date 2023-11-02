@@ -10,7 +10,9 @@ router.post(
 		check('email', 'Incorrect email').isEmail(),
 		check('password', 'Password mush be longer than 6 characters').isLength({ min: 6 }),
 	],
-	Auth.post
+	Auth.register
 );
+
+router.post('/login', Auth.login);
 
 export default router;
