@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentDir, getDirStack } from '../../selectors';
-import { getFiles } from '../../actions/api/file';
+import { getFiles, uploadFile } from '../../actions/api/file';
 import FileList from './fileList/FileList';
 import './disk.less';
 import Popup from '../popup/Popup';
@@ -22,6 +22,12 @@ function Disk() {
 		const backDirId = dirStack.pop();
 		dispatch(setCurrentDir(backDirId));
 	};
+
+	const handleUploadFile = (e) => {
+		const files = [...e.target.files];
+		console.log(files);
+		files.forEach((file) => dispatch(uploadFile(file, currentDir)));
+	};
 	return (
 		<div className='disk'>
 			<div className='disk__btns'>
@@ -31,6 +37,18 @@ function Disk() {
 				<button className='disk__create' onClick={handleCreateFile}>
 					Create folder
 				</button>
+				<div className='disk__upload'>
+					<label htmlFor='disk__upload-input' className='disk__upload-label'>
+						Upload file
+					</label>
+					<input
+						multiple
+						onChange={handleUploadFile}
+						type='file'
+						className='disk__upload-input'
+						id='disk__upload-input'
+					/>
+				</div>
 			</div>
 			<FileList />
 			<Popup />
