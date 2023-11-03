@@ -3,6 +3,8 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
+import fileService from './fileService.js';
+import File from '../models/File.js';
 class Auth {
 	async register(req, res) {
 		try {
@@ -22,6 +24,7 @@ class Auth {
 			const hashedPassword = await bcrypt.hash(password, 5);
 			const user = new User({ email, password: hashedPassword });
 			await user.save();
+			await fileService.createDir(new File({ user: user.id, name: '' }));
 			return res.json({ message: 'User was created' });
 		} catch (error) {
 			console.log(e);
