@@ -39,7 +39,7 @@ class FileController {
 
 	async uploadFile(req, res) {
 		try {
-			const { file } = req.files.file;
+			const { file } = req.files;
 
 			const parent = await File.findOne({ user: req.user.id, _id: req.body.parent });
 			const user = await User.findOne({ _id: req.user.id });
