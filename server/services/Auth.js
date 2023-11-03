@@ -27,7 +27,7 @@ class Auth {
 			await fileService.createDir(new File({ user: user.id, name: '' }));
 			return res.json({ message: 'User was created' });
 		} catch (error) {
-			console.log(e);
+			console.log(error);
 			res.send('Something went wrong');
 		}
 	}
