@@ -1,4 +1,4 @@
-import { LOGOUT, SET_CURRENT_DIR, SET_FILES, SET_USER } from '..';
+import { ADD_FILE, LOGOUT, SET_CURRENT_DIR, SET_FILES, SET_POPUP_DISPLAY, SET_USER } from '..';
 
 export const setUser = (user) => ({
 	type: SET_USER,
@@ -17,4 +17,14 @@ export const setFiles = (files) => ({
 export const setCurrentDir = (dir) => ({
 	type: SET_CURRENT_DIR,
 	payload: dir,
+});
+
+export const addFile = (file) => ({
+	type: ADD_FILE,
+	payload: file,
+});
+
+export const setPopupDisplay = (value) => ({
+	type: SET_POPUP_DISPLAY,
+	payload: value,
 });
