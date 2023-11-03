@@ -4,9 +4,11 @@ import config from 'config';
 import authRouter from './routes/auth.routes.js';
 import filesRouter from './routes/file.routes.js';
 import corsMiddleware from './middleware/cors.js';
+import fileUpload from 'express-fileupload';
 
 const app = express();
 
+app.use(fileUpload({}));
 app.use(express.json());
 app.use(corsMiddleware);
 app.use('/api/auth', authRouter);
