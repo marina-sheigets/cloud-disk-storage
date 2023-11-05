@@ -22,9 +22,9 @@ class FileService {
 	deleteFile(file) {
 		const filePath = this.getPath(file);
 		if (file.type === 'dir') {
-			fs.rmdirSync(path);
+			fs.rmdirSync(filePath);
 		} else {
-			fs.unlinkSync(path);
+			fs.unlinkSync(filePath);
 		}
 	}
 
