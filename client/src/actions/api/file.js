@@ -55,16 +55,15 @@ export const uploadFile = (file, dirId) => {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
 				},
-				onUploadProgress: (progressEvent) => {
-					const totalLength = progressEvent.lengthComputable
-						? progressEvent.total
-						: progressEvent.loaded;
-					console.log(totalLength);
-					if (totalLength) {
-						let progress = Math.round((progressEvent.loaded * 100) / totalLength);
-						console.log(progress);
-					}
-				},
+				// onUploadProgress: (progressEvent) => {
+				// 	const totalLength = progressEvent.lengthComputable
+				// 		? progressEvent.total
+				// 		: progressEvent.loaded;
+				// 	if (totalLength) {
+				// 		let progress = Math.round((progressEvent.loaded * 100) / totalLength);
+				// 		console.log(progress);
+				// 	}
+				// },
 			});
 			dispatch(addFile(response.data));
 		} catch (error) {
