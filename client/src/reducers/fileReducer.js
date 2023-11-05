@@ -1,4 +1,11 @@
-import { ADD_FILE, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES, SET_POPUP_DISPLAY } from '../actions';
+import {
+	ADD_FILE,
+	DELETE_FILE,
+	PUSH_TO_STACK,
+	SET_CURRENT_DIR,
+	SET_FILES,
+	SET_POPUP_DISPLAY,
+} from '../actions';
 
 const defaultState = {
 	files: [],
@@ -38,6 +45,12 @@ export default function fileReducer(state = defaultState, action) {
 			return {
 				...state,
 				dirStack: [...state.dirStack, action.payload],
+			};
+		}
+		case DELETE_FILE: {
+			return {
+				...state,
+				files: [...state.files.filter((file) => file._id !== action.payload)],
 			};
 		}
 		default:

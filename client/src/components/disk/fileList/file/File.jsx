@@ -9,7 +9,7 @@ import PdfLogo from '../../../../assets/img/pdf.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { pushToStack, setCurrentDir } from '../../../../actions/creators';
 import { getCurrentDir } from '../../../../selectors';
-import { downloadFile } from '../../../../actions/api/file';
+import { deleteFile, downloadFile } from '../../../../actions/api/file';
 function File({ file }) {
 	const FileTypeLogo = {
 		dir: FolderLogo,
@@ -36,6 +36,11 @@ function File({ file }) {
 		downloadFile(file);
 	};
 
+	const handleDeleteFile = (e) => {
+		e.stopPropagation();
+		dispatch(deleteFile(file));
+	};
+
 	return (
 		<div className='file' onClick={handleOpenDir}>
 			<img
@@ -52,7 +57,9 @@ function File({ file }) {
 					Download
 				</button>
 			)}
-			<button className='file__btn file__delete'>Delete</button>
+			<button className='file__btn file__delete' onClick={handleDeleteFile}>
+				Delete
+			</button>
 		</div>
 	);
 }

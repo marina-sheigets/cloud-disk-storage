@@ -1,5 +1,6 @@
 import {
 	ADD_FILE,
+	DELETE_FILE,
 	LOGOUT,
 	POP_FROM_STACK,
 	PUSH_TO_STACK,
@@ -45,4 +46,9 @@ export const pushToStack = (dir) => ({
 
 export const popFromStack = () => ({
 	type: POP_FROM_STACK,
+});
+
+export const deleteFileAction = (fileId) => ({
+	type: DELETE_FILE,
+	payload: fileId,
 });
