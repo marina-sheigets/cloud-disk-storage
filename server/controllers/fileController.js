@@ -112,7 +112,7 @@ class FileController {
 			}
 
 			fileService.deleteFile(file);
-			await file.remove();
+			await File.deleteOne({ _id: req.query.id, user: req.user.id });
 			return res.json({ message: 'File was deleted successfully' });
 		} catch (e) {
 			console.log(e);
