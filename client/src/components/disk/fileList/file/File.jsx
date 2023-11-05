@@ -9,6 +9,7 @@ import PdfLogo from '../../../../assets/img/pdf.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { pushToStack, setCurrentDir } from '../../../../actions/creators';
 import { getCurrentDir } from '../../../../selectors';
+import { downloadFile } from '../../../../actions/api/file';
 function File({ file }) {
 	const FileTypeLogo = {
 		dir: FolderLogo,
@@ -29,6 +30,12 @@ function File({ file }) {
 		dispatch(pushToStack(currentDir));
 		dispatch(setCurrentDir(file._id));
 	};
+
+	const handleDownloadFile = (e) => {
+		e.stopPropagation();
+		downloadFile(file);
+	};
+
 	return (
 		<div className='file' onClick={handleOpenDir}>
 			<img
@@ -40,6 +47,12 @@ function File({ file }) {
 			<div className='file__name'>{file.name}</div>
 			<div className='file__date'>{file.date.slice(0, 10)}</div>
 			<div className='file__size'>{file.size}</div>
+			{file.type !== 'dir' && (
+				<button onClick={handleDownloadFile} className='file__btn file__download'>
+					Download
+				</button>
+			)}
+			<button className='file__btn file__delete'>Delete</button>
 		</div>
 	);
 }
