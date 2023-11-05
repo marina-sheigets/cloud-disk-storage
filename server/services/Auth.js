@@ -57,7 +57,7 @@ class Auth {
 				},
 			});
 		} catch (error) {
-			console.log(e);
+			console.log(error);
 			res.send('Something went wrong');
 		}
 	}
@@ -78,7 +78,7 @@ class Auth {
 				},
 			});
 		} catch (error) {
-			console.log(e);
+			console.log(error);
 			res.send('Something went wrong');
 		}
 	}

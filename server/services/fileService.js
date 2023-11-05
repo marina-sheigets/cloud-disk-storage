@@ -7,13 +7,14 @@ class FileService {
 		const filePath = `${config.get('filePath')}\\${file.user}\\${file.path}`;
 		return new Promise((resolve, reject) => {
 			try {
-				if (!fs.existsSync(file.path)) {
+				if (!fs.existsSync(filePath)) {
 					fs.mkdirSync(filePath);
 					return resolve({ message: 'File was created' });
 				} else {
 					return reject({ message: 'File already exists' });
 				}
 			} catch (error) {
+				console.log(error);
 				return reject({ message: 'File error' });
 			}
 		});
