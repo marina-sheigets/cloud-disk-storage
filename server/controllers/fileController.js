@@ -4,7 +4,7 @@ import File from '../models/File.js';
 import config from 'config';
 import fs from 'fs';
 import { SORTING } from '../constants/index.js';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 class FileController {
 	async createDir(req, res) {
 		try {
@@ -165,7 +165,7 @@ class FileController {
 		try {
 			let file = req.files.file;
 			const user = await User.findById(req.user.id);
-			const avatarName = uuid.v4() + '.jpg';
+			const avatarName = uuidv4() + '.jpg';
 			file.mv(config.get('staticPath') + '\\' + avatarName);
 			user.avatar = avatarName;
 			await user.save();
