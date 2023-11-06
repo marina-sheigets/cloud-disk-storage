@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentDir, getDirStack, getLoader } from '../../selectors';
+import { getCurrentDir, getDirStack, getIsAuth, getLoader } from '../../selectors';
 import { getFiles, searchFiles, uploadFile } from '../../actions/api/file';
 import FileList from './fileList/FileList';
 import './disk.less';
@@ -9,6 +9,7 @@ import { setCurrentDir, setPopupDisplay } from '../../actions/creators';
 import UploadModal from '../uploader/UploadModal';
 import Loader from '../loader/Loader';
 import ListView from '../listView/ListView';
+import { useNavigate } from 'react-router-dom';
 
 const OPTIONS = [
 	{ id: 4, value: 'name', label: 'By name' },
@@ -18,9 +19,11 @@ const OPTIONS = [
 ];
 function Disk() {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const loader = useSelector(getLoader);
 	const currentDir = useSelector(getCurrentDir);
 	const dirStack = useSelector(getDirStack);
+	const isAuth = useSelector(getIsAuth);
 
 	const [sort, setSort] = useState('type');
 	const [dragEnter, setDragEnter] = useState(false);
@@ -32,6 +35,12 @@ function Disk() {
 	useEffect(() => {
 		dispatch(getFiles(currentDir, sort));
 	}, [currentDir, dispatch, sort]);
+
+	useEffect(() => {
+		if (!isAuth) {
+			navigate('/login');
+		}
+	}, [isAuth, navigate]);
 
 	const handleChangeSearchQuery = (e) => {
 		setSearchQuery(e.target.value);
