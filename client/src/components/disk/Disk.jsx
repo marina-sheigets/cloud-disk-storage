@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentDir, getDirStack, getLoader } from '../../selectors';
-import { getFiles, uploadFile } from '../../actions/api/file';
+import { getFiles, searchFiles, uploadFile } from '../../actions/api/file';
 import FileList from './fileList/FileList';
 import './disk.less';
 import Popup from '../popup/Popup';
@@ -23,6 +23,8 @@ function Disk() {
 
 	const [sort, setSort] = useState('type');
 	const [dragEnter, setDragEnter] = useState(false);
+	const [searchQuery, setSearchQuery] = useState('');
+	const [searchTimeout, setSearchTimeout] = useState(false);
 	const handleCreateFile = () => {
 		dispatch(setPopupDisplay('flex'));
 	};
@@ -30,6 +32,21 @@ function Disk() {
 		dispatch(getFiles(currentDir, sort));
 	}, [currentDir, dispatch, sort]);
 
+	const handleChangeSearchQuery = (e) => {
+		setSearchQuery(e.target.value);
+		if (searchTimeout) {
+			clearTimeout(searchTimeout);
+		}
+		if (e.target.value) {
+			setSearchTimeout(
+				setTimeout(() => {
+					dispatch(searchFiles(searchQuery));
+				}, 500)
+			);
+		} else {
+			dispatch(getFiles(currentDir, sort));
+		}
+	};
 	const handleBack = () => {
 		const backDirId = dirStack.pop();
 		dispatch(setCurrentDir(backDirId));
@@ -116,6 +133,13 @@ function Disk() {
 						</option>
 					))}
 				</select>
+				<input
+					type='text'
+					value={searchQuery}
+					onChange={handleChangeSearchQuery}
+					placeholder='Search'
+					className='disk__search'
+				/>
 			</div>
 			<FileList />
 			<Popup />
