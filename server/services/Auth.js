@@ -53,7 +53,7 @@ class Auth {
 					email: user.email,
 					diskSpace: user.diskSpace,
 					files: user.files,
-					usedSpace: user.usedSpaces,
+					usedSpace: user.usedSpace,
 					avatar: user.avatar,
 				},
 			});
