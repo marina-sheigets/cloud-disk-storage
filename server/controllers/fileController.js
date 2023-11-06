@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import File from '../models/File.js';
 import config from 'config';
 import fs from 'fs';
+import { SORTING } from '../constants/index.js';
 
 class FileController {
 	async createDir(req, res) {
@@ -29,7 +30,36 @@ class FileController {
 
 	async fetchFiles(req, res) {
 		try {
-			const files = await File.find({ user: req.user.id, parent: req.query.parent });
+			const { sort } = req.query;
+			let files;
+			switch (sort) {
+				case SORTING.NAME: {
+					files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({
+						name: 1,
+					});
+					break;
+				}
+				case SORTING.TYPE: {
+					files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({
+						type: 1,
+					});
+					break;
+				}
+				case SORTING.DATE: {
+					files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({
+						date: 1,
+					});
+					break;
+				}
+				case SORTING.SIZE: {
+					files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({
+						size: 1,
+					});
+					break;
+				}
+				default:
+					files = await File.find({ user: req.user.id, parent: req.query.parent });
+			}
 			return res.json(files);
 		} catch (error) {
 			console.log(error);
