@@ -11,7 +11,6 @@ function Profile({ handleAvatarClose }) {
 	};
 
 	const handleChangeAvatar = (e) => {
-		console.log(e);
 		const file = e.target.files[0];
 		dispatch(uploadAvatar(file));
 		handleAvatarClose();

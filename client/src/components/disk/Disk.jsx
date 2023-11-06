@@ -99,6 +99,10 @@ function Disk() {
 		setSort(e.target.value);
 	};
 
+	useEffect(() => {
+		dispatch(setCurrentDir(null));
+	}, [dispatch]);
+
 	if (loader) {
 		return <Loader />;
 	}
@@ -118,7 +122,10 @@ function Disk() {
 			onDragLeave={handleDragLeave}
 			onDragOver={handleDragOver}>
 			<div className='disk__btns'>
-				<button className='disk__back' onClick={handleBack}>
+				<button
+					className='disk__back'
+					disabled={dirStack.length === 0}
+					onClick={handleBack}>
 					Back
 				</button>
 				<button className='disk__create' onClick={handleCreateFile}>
