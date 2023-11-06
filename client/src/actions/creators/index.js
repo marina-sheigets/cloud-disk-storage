@@ -13,6 +13,7 @@ import {
 	SET_FILES,
 	SET_POPUP_DISPLAY,
 	SET_USER,
+	SET_VIEW,
 	SHOW_LOADER,
 	SHOW_UPLOADER,
 } from '..';
@@ -89,4 +90,9 @@ export const showLoaderAction = () => ({
 
 export const hideLoaderAction = () => ({
 	type: HIDE_LOADER,
+});
+
+export const setViewAction = (view) => ({
+	type: SET_VIEW,
+	payload: view,
 });

@@ -5,6 +5,7 @@ import {
 	SET_CURRENT_DIR,
 	SET_FILES,
 	SET_POPUP_DISPLAY,
+	SET_VIEW,
 } from '../actions';
 
 const defaultState = {
@@ -12,6 +13,7 @@ const defaultState = {
 	currentDir: null,
 	popupDisplay: 'none',
 	dirStack: [],
+	view: 'list',
 };
 
 export default function fileReducer(state = defaultState, action) {
@@ -51,6 +53,12 @@ export default function fileReducer(state = defaultState, action) {
 			return {
 				...state,
 				files: [...state.files.filter((file) => file._id !== action.payload)],
+			};
+		}
+		case SET_VIEW: {
+			return {
+				...state,
+				view: action.payload,
 			};
 		}
 		default:

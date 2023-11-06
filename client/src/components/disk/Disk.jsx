@@ -8,6 +8,7 @@ import Popup from '../popup/Popup';
 import { setCurrentDir, setPopupDisplay } from '../../actions/creators';
 import UploadModal from '../uploader/UploadModal';
 import Loader from '../loader/Loader';
+import ListView from '../listView/ListView';
 
 const OPTIONS = [
 	{ id: 4, value: 'name', label: 'By name' },
@@ -133,6 +134,7 @@ function Disk() {
 						</option>
 					))}
 				</select>
+				<ListView />
 				<input
 					type='text'
 					value={searchQuery}
