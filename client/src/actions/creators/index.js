@@ -3,6 +3,7 @@ import {
 	ADD_UPLOAD_FILE,
 	CHANGE_UPLOAD_FILE,
 	DELETE_FILE,
+	HIDE_LOADER,
 	HIDE_UPLOADER,
 	LOGOUT,
 	POP_FROM_STACK,
@@ -12,6 +13,7 @@ import {
 	SET_FILES,
 	SET_POPUP_DISPLAY,
 	SET_USER,
+	SHOW_LOADER,
 	SHOW_UPLOADER,
 } from '..';
 
@@ -79,4 +81,12 @@ export const removeUploadFileAction = (fileId) => ({
 export const changeUploadFileAction = (data) => ({
 	type: CHANGE_UPLOAD_FILE,
 	payload: data,
+});
+
+export const showLoaderAction = () => ({
+	type: SHOW_LOADER,
+});
+
+export const hideLoaderAction = () => ({
+	type: HIDE_LOADER,
 });

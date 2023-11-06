@@ -4,13 +4,16 @@ import {
 	addUploadFileAction,
 	changeUploadFileAction,
 	deleteFileAction,
+	hideLoaderAction,
 	setFiles,
+	showLoaderAction,
 	showUploaderAction,
 } from '../creators';
 
 export const getFiles = (dirId, sort) => {
 	return async (dispatch) => {
 		try {
+			dispatch(showLoaderAction());
 			let url = `http://localhost:5000/api/files`;
 			if (dirId) {
 				url = `http://localhost:5000/api/files?parent=${dirId}`;
@@ -30,6 +33,8 @@ export const getFiles = (dirId, sort) => {
 			dispatch(setFiles(response.data));
 		} catch (error) {
 			alert(error.response.data.message);
+		} finally {
+			dispatch(hideLoaderAction());
 		}
 	};
 };

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentDir, getDirStack } from '../../selectors';
+import { getCurrentDir, getDirStack, getLoader } from '../../selectors';
 import { getFiles, uploadFile } from '../../actions/api/file';
 import FileList from './fileList/FileList';
 import './disk.less';
 import Popup from '../popup/Popup';
 import { setCurrentDir, setPopupDisplay } from '../../actions/creators';
 import UploadModal from '../uploader/UploadModal';
+import Loader from '../loader/Loader';
 
 const OPTIONS = [
 	{ id: 4, value: 'name', label: 'By name' },
@@ -16,6 +17,7 @@ const OPTIONS = [
 ];
 function Disk() {
 	const dispatch = useDispatch();
+	const loader = useSelector(getLoader);
 	const currentDir = useSelector(getCurrentDir);
 	const dirStack = useSelector(getDirStack);
 
@@ -69,6 +71,10 @@ function Disk() {
 	const handleChangeSort = (e) => {
 		setSort(e.target.value);
 	};
+
+	if (loader) {
+		return <Loader />;
+	}
 	return dragEnter ? (
 		<div
 			className='drop-area'
