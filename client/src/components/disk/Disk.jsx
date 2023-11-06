@@ -6,6 +6,7 @@ import FileList from './fileList/FileList';
 import './disk.less';
 import Popup from '../popup/Popup';
 import { setCurrentDir, setPopupDisplay } from '../../actions/creators';
+import UploadModal from '../uploader/UploadModal';
 
 function Disk() {
 	const dispatch = useDispatch();
@@ -94,6 +95,7 @@ function Disk() {
 			</div>
 			<FileList />
 			<Popup />
+			<UploadModal/>
 		</div>
 	);
 }

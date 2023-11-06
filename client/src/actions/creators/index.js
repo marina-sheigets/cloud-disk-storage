@@ -1,13 +1,18 @@
 import {
 	ADD_FILE,
+	ADD_UPLOAD_FILE,
+	CHANGE_UPLOAD_FILE,
 	DELETE_FILE,
+	HIDE_UPLOADER,
 	LOGOUT,
 	POP_FROM_STACK,
 	PUSH_TO_STACK,
+	REMOVE_UPLOAD_FILE,
 	SET_CURRENT_DIR,
 	SET_FILES,
 	SET_POPUP_DISPLAY,
 	SET_USER,
+	SHOW_UPLOADER,
 } from '..';
 
 export const setUser = (user) => ({
@@ -51,4 +56,27 @@ export const popFromStack = () => ({
 export const deleteFileAction = (fileId) => ({
 	type: DELETE_FILE,
 	payload: fileId,
+});
+
+export const showUploaderAction = () => ({
+	type: SHOW_UPLOADER,
+});
+
+export const hideUploaderAction = () => ({
+	type: HIDE_UPLOADER,
+});
+
+export const addUploadFileAction = (file) => ({
+	type: ADD_UPLOAD_FILE,
+	payload: file,
+});
+
+export const removeUploadFileAction = (fileId) => ({
+	type: REMOVE_UPLOAD_FILE,
+	payload: fileId,
+});
+
+export const changeUploadFileAction = (data) => ({
+	type: CHANGE_UPLOAD_FILE,
+	payload: data,
 });

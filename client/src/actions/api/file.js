@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { addFile, deleteFileAction, setFiles } from '../creators';
+import {
+	addFile,
+	addUploadFileAction,
+	changeUploadFileAction,
+	deleteFileAction,
+	setFiles,
+	showUploaderAction,
+} from '../creators';
 
 export const getFiles = (dirId) => {
 	return async (dispatch) => {
@@ -51,19 +58,25 @@ export const uploadFile = (file, dirId) => {
 			if (dirId) {
 				formData.append('parent', dirId);
 			}
+
+			const uploadFile = { name: file.name, progress: 0, id: Date.now() };
+			dispatch(showUploaderAction());
+			dispatch(addUploadFileAction(uploadFile));
 			const response = await axios.post(`http://localhost:5000/api/files/upload`, formData, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
 				},
-				// onUploadProgress: (progressEvent) => {
-				// 	const totalLength = progressEvent.lengthComputable
-				// 		? progressEvent.total
-				// 		: progressEvent.loaded;
-				// 	if (totalLength) {
-				// 		let progress = Math.round((progressEvent.loaded * 100) / totalLength);
-				// 		console.log(progress);
-				// 	}
-				// },
+				onUploadProgress: (progressEvent) => {
+					const totalLength = progressEvent.lengthComputable
+						? progressEvent.total
+						: progressEvent.loaded;
+					if (totalLength) {
+						uploadFile.progress = Math.round(
+							(progressEvent.loaded * 100) / totalLength
+						);
+						dispatch(changeUploadFileAction(uploadFile));
+					}
+				},
 			});
 			dispatch(addFile(response.data));
 		} catch (error) {
