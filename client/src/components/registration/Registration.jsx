@@ -2,8 +2,10 @@ import { useState } from 'react';
 import Input from '../input/Input';
 import './registration.less';
 import { registration } from '../../actions/api/user';
+import { useDispatch } from 'react-redux';
 
 function Registration() {
+	const dispatch = useDispatch();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -27,7 +29,9 @@ function Registration() {
 				onChange={handleChangePassword}
 				type='password'
 				placeholder={'Enter your password'}></Input>
-			<button className='registration__btn' onClick={() => registration(email, password)}>
+			<button
+				className='registration__btn'
+				onClick={() => dispatch(registration(email, password))}>
 				Create account
 			</button>
 		</div>

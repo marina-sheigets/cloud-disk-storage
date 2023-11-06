@@ -2,13 +2,14 @@ import axios from 'axios';
 import { setUser } from '../creators';
 import { API_URL } from '../../config';
 
-export const registration = async (email, password) => {
+export const registration = (email, password) => async (dispatch) => {
 	try {
 		const response = await axios.post(`${API_URL}api/auth/registration/`, {
 			email,
 			password,
 		});
-		alert(response.data.message);
+		dispatch(setUser(response.data.user));
+		localStorage.setItem('token', response.data.token);
 	} catch (error) {
 		alert(error.response.data.message);
 	}

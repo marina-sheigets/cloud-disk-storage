@@ -25,7 +25,9 @@ class Auth {
 			const user = new User({ email, password: hashedPassword });
 			await user.save();
 			await fileService.createDir(new File({ user: user.id, name: '' }));
-			return res.json({ message: 'User was created' });
+			const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
+
+			return res.json({ message: 'User was created', user, token });
 		} catch (error) {
 			console.log(error);
 			res.send('Something went wrong');
