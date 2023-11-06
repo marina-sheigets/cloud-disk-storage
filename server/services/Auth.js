@@ -54,6 +54,7 @@ class Auth {
 					diskSpace: user.diskSpace,
 					files: user.files,
 					usedSpace: user.usedSpaces,
+					avatar: user.avatar,
 				},
 			});
 		} catch (error) {
