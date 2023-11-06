@@ -4,7 +4,7 @@ import File from '../models/File.js';
 import config from 'config';
 import fs from 'fs';
 import { SORTING } from '../constants/index.js';
-
+import uuid from 'uuid';
 class FileController {
 	async createDir(req, res) {
 		try {
@@ -158,6 +158,34 @@ class FileController {
 		} catch (e) {
 			console.log(e);
 			res.status(500).json({ message: 'Search error' });
+		}
+	}
+
+	async uploadAvatar(req, res) {
+		try {
+			let file = req.files.file;
+			const user = await User.findById(req.user.id);
+			const avatarName = uuid.v4() + '.jpg';
+			file.mv(config.get('staticPath') + '\\' + avatarName);
+			user.avatar = avatarName;
+			await user.save();
+			return res.json({ message: 'Avatar was saved', user });
+		} catch (e) {
+			console.log(e);
+			res.status(500).json({ message: 'Upload avatar error' });
+		}
+	}
+
+	async removeAvatar(req, res) {
+		try {
+			const user = await User.findById(req.user.id);
+			fs.unlinkSync(config.get('staticPath') + '\\' + user.avatar);
+			user.avatar = null;
+			await user.save();
+			return res.json({ message: 'Avatar was removed', user });
+		} catch (e) {
+			console.log(e);
+			res.status(500).json({ message: 'Remove avatar error' });
 		}
 	}
 }
