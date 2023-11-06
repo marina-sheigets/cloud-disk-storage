@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './uploader.less';
 import { hideUploaderAction } from '../../actions/creators';
-import { useEffect } from 'react';
 function UploadModal() {
 	const dispatch = useDispatch();
 	const isVisible = useSelector(getIsVisible);
@@ -13,12 +12,6 @@ function UploadModal() {
 	const handleCloseUploaderModal = () => {
 		dispatch(hideUploaderAction());
 	};
-
-	useEffect(() => {
-		if (!files.length) {
-			handleCloseUploaderModal();
-		}
-	}, [files]);
 
 	return (
 		isVisible && (

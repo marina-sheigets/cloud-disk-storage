@@ -23,6 +23,7 @@ export default function uploadReducer(state = defaultState, action) {
 			return {
 				...state,
 				isVisible: false,
+				files: [],
 			};
 		}
 		case ADD_UPLOAD_FILE: {
