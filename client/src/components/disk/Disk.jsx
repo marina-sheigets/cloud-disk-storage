@@ -8,18 +8,25 @@ import Popup from '../popup/Popup';
 import { setCurrentDir, setPopupDisplay } from '../../actions/creators';
 import UploadModal from '../uploader/UploadModal';
 
+const OPTIONS = [
+	{ id: 4, value: 'name', label: 'By name' },
+	{ id: 1, value: 'date', label: 'By date' },
+	{ id: 2, value: 'type', label: 'By type' },
+	{ id: 3, value: 'size', label: 'By size' },
+];
 function Disk() {
 	const dispatch = useDispatch();
 	const currentDir = useSelector(getCurrentDir);
 	const dirStack = useSelector(getDirStack);
 
+	const [sort, setSort] = useState('type');
 	const [dragEnter, setDragEnter] = useState(false);
 	const handleCreateFile = () => {
 		dispatch(setPopupDisplay('flex'));
 	};
 	useEffect(() => {
-		dispatch(getFiles(currentDir));
-	}, [currentDir, dispatch]);
+		dispatch(getFiles(currentDir, sort));
+	}, [currentDir, dispatch, sort]);
 
 	const handleBack = () => {
 		const backDirId = dirStack.pop();
@@ -58,6 +65,10 @@ function Disk() {
 		setDragEnter(false);
 		files.forEach((file) => dispatch(uploadFile(file, currentDir)));
 	};
+
+	const handleChangeSort = (e) => {
+		setSort(e.target.value);
+	};
 	return dragEnter ? (
 		<div
 			className='drop-area'
@@ -92,10 +103,17 @@ function Disk() {
 						id='disk__upload-input'
 					/>
 				</div>
+				<select value={sort} onChange={handleChangeSort} className='disk__select'>
+					{OPTIONS.map((option) => (
+						<option key={option.id} value={option.value}>
+							{option.label}
+						</option>
+					))}
+				</select>
 			</div>
 			<FileList />
 			<Popup />
-			<UploadModal/>
+			<UploadModal />
 		</div>
 	);
 }
