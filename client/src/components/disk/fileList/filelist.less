@@ -1,8 +1,12 @@
+@import '../../../utils/colors.less';
 .filelist {
 	margin: 20px 0;
 	&__header {
 		display: grid;
 		grid-template-columns: 1fr 4fr repeat(4, 1fr);
+		font-weight: 800;
+		font-size: 1.2rem;
+		border-bottom: 2px solid @font-color;
 	}
 
 	&__name {
