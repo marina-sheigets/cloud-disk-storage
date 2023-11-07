@@ -6,6 +6,7 @@ import {
 	SET_FILES,
 	SET_POPUP_DISPLAY,
 	SET_VIEW,
+	EMPTY_STACK,
 } from '../actions';
 
 const defaultState = {
@@ -47,6 +48,12 @@ export default function fileReducer(state = defaultState, action) {
 			return {
 				...state,
 				dirStack: [...state.dirStack, action.payload],
+			};
+		}
+		case EMPTY_STACK: {
+			return {
+				...state,
+				dirStack: [],
 			};
 		}
 		case DELETE_FILE: {

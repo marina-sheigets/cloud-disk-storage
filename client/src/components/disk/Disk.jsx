@@ -5,7 +5,7 @@ import { getFiles, searchFiles, uploadFile } from '../../actions/api/file';
 import FileList from './fileList/FileList';
 import './disk.less';
 import Popup from '../popup/Popup';
-import { setCurrentDir, setPopupDisplay } from '../../actions/creators';
+import { emptyStack, setCurrentDir, setPopupDisplay } from '../../actions/creators';
 import UploadModal from '../uploader/UploadModal';
 import Loader from '../loader/Loader';
 import ListView from '../listView/ListView';
@@ -101,6 +101,7 @@ function Disk() {
 
 	useEffect(() => {
 		dispatch(setCurrentDir(null));
+		dispatch(emptyStack());
 	}, [dispatch]);
 
 	if (loader) {

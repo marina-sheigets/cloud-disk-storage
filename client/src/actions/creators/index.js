@@ -3,6 +3,7 @@ import {
 	ADD_UPLOAD_FILE,
 	CHANGE_UPLOAD_FILE,
 	DELETE_FILE,
+	EMPTY_STACK,
 	HIDE_LOADER,
 	HIDE_UPLOADER,
 	LOGOUT,
@@ -54,6 +55,10 @@ export const pushToStack = (dir) => ({
 
 export const popFromStack = () => ({
 	type: POP_FROM_STACK,
+});
+
+export const emptyStack = () => ({
+	type: EMPTY_STACK,
 });
 
 export const deleteFileAction = (fileId) => ({

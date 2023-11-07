@@ -9,6 +9,7 @@ export const DELETE_FILE = 'DELETE_FILE';
 export const SET_POPUP_DISPLAY = 'SET_POPUP_DISPLAY';
 export const PUSH_TO_STACK = 'PUSH_TO_STACK';
 export const POP_FROM_STACK = 'POP_FROM_STACK';
+export const EMPTY_STACK = 'EMPTY_STACK';
 
 export const SHOW_UPLOADER = 'SHOW_UPLOADER';
 export const HIDE_UPLOADER = 'HIDE_UPLOADER';
