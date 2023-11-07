@@ -101,7 +101,9 @@ export const uploadFile = (file, dirId) => {
 
 export async function downloadFile(file) {
 	const response = await fetch(`${API_URL}api/files/download?id=${file._id}`, {
-		Authorization: `Bearer ${localStorage.getItem('token')}`,
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem('token')}`,
+		},
 	});
 
 	if (response.status) {
@@ -112,7 +114,9 @@ export async function downloadFile(file) {
 		link.download = file.name;
 		document.body.appendChild(link);
 		link.click();
-		link.remove();
+		document.body.removeChild(link);
+	} else {
+		alert('Failed to download the file');
 	}
 }
 
