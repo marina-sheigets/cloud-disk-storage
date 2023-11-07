@@ -10,6 +10,7 @@ import UploadModal from '../uploader/UploadModal';
 import Loader from '../loader/Loader';
 import ListView from '../listView/ListView';
 import { useNavigate } from 'react-router-dom';
+import { useDebounce } from '../../hooks/useDebouce';
 
 const OPTIONS = [
 	{ id: 4, value: 'name', label: 'By name' },
@@ -28,7 +29,7 @@ function Disk() {
 	const [sort, setSort] = useState('type');
 	const [dragEnter, setDragEnter] = useState(false);
 	const [searchQuery, setSearchQuery] = useState('');
-	const [searchTimeout, setSearchTimeout] = useState(false);
+	const debouncedValue = useDebounce(searchQuery, 750);
 	const handleCreateFile = () => {
 		dispatch(setPopupDisplay('flex'));
 	};
@@ -44,18 +45,6 @@ function Disk() {
 
 	const handleChangeSearchQuery = (e) => {
 		setSearchQuery(e.target.value);
-		if (searchTimeout) {
-			clearTimeout(searchTimeout);
-		}
-		if (e.target.value) {
-			setSearchTimeout(
-				setTimeout(() => {
-					dispatch(searchFiles(searchQuery));
-				}, 500)
-			);
-		} else {
-			dispatch(getFiles(currentDir, sort));
-		}
 	};
 	const handleBack = () => {
 		const backDirId = dirStack.pop();
@@ -103,6 +92,14 @@ function Disk() {
 		dispatch(setCurrentDir(null));
 		dispatch(emptyStack());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (debouncedValue) {
+			dispatch(searchFiles(debouncedValue));
+		} else {
+			dispatch(getFiles(currentDir, sort));
+		}
+	}, [currentDir, debouncedValue, dispatch, sort]);
 
 	if (loader) {
 		return <Loader />;
