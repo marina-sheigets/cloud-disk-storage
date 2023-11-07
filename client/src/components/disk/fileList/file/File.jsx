@@ -81,7 +81,9 @@ function File({ file }) {
 				alt=''
 				className='file__img'
 			/>
-			<div className='file__name'>{file.name}</div>
+			<div className='file__name' title={file.name}>
+				{truncateFileName(file.name, 70)}
+			</div>
 			<div className='file__date'>{file.date.slice(0, 10)}</div>
 			<div className='file__size'>{sizeFormatter(file.size)}</div>
 			{file.type !== 'dir' && (
