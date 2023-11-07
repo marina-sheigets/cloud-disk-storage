@@ -25,7 +25,7 @@ class Auth {
 			const user = new User({ email, password: hashedPassword });
 			await user.save();
 			await fileService.createDir(new File({ user: user.id, name: '' }));
-			const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
+			const token = jwt.sign({ id: user._id }, config.get('secretKey'), { expiresIn: '1h' });
 
 			return res.json({ message: 'User was created', user, token });
 		} catch (error) {
@@ -47,7 +47,7 @@ class Auth {
 				return res.status(400).json({ message: 'User not found' });
 			}
 
-			const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
+			const token = jwt.sign({ id: user._id }, config.get('secretKey'), { expiresIn: '1h' });
 			return res.json({
 				token,
 				user: {
@@ -69,7 +69,7 @@ class Auth {
 		try {
 			const user = await User.findOne({ _id: req.user.id });
 
-			const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
+			const token = jwt.sign({ id: user._id }, config.get('secretKey'), { expiresIn: '1h' });
 			return res.json({
 				token,
 				user: {
