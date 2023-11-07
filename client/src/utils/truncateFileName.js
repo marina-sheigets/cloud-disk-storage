@@ -1,7 +1,6 @@
-const MAX_DISPLAY_LENGTH = 9;
-export const truncateFileName = (fileName) => {
-	if (fileName.length > MAX_DISPLAY_LENGTH) {
-		return `${fileName.substring(0, MAX_DISPLAY_LENGTH)}...`;
+export const truncateFileName = (fileName, maxDisplayLength = 9) => {
+	if (fileName.length > maxDisplayLength) {
+		return `${fileName.substring(0, maxDisplayLength)}...`;
 	}
 	return fileName;
 };

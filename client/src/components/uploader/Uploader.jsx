@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import './uploader.less';
 import { useDispatch } from 'react-redux';
+import { truncateFileName } from '../../utils/truncateFileName';
 import { removeUploadFileAction } from '../../actions/creators';
 function Uploader({ file }) {
 	const dispatch = useDispatch();
@@ -12,7 +13,9 @@ function Uploader({ file }) {
 	return (
 		<div className='upload-file'>
 			<div className='upload-file__header'>
-				<div className='upload-file__name'>{file.name}</div>
+				<div className='upload-file__name' title={file.name}>
+					{truncateFileName(file.name, 20)}
+				</div>
 				<button className='upload-file__remove' onClick={handleClickDelete}>
 					X
 				</button>
