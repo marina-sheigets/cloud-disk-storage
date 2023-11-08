@@ -2,9 +2,10 @@ import { validationResult } from 'express-validator';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import config from 'config';
+import 'dotenv/config';
 import fileService from './fileService.js';
 import File from '../models/File.js';
+
 class Auth {
 	async register(req, res) {
 		try {
@@ -25,7 +26,7 @@ class Auth {
 			const user = new User({ email, password: hashedPassword });
 			await user.save();
 			await fileService.createDir(new File({ user: user.id, name: '' }));
-			const token = jwt.sign({ id: user._id }, config.get('secretKey'), { expiresIn: '1h' });
+			const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
 			return res.json({ message: 'User was created', user, token });
 		} catch (error) {
@@ -47,7 +48,7 @@ class Auth {
 				return res.status(400).json({ message: 'User not found' });
 			}
 
-			const token = jwt.sign({ id: user._id }, config.get('secretKey'), { expiresIn: '1h' });
+			const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
 			return res.json({
 				token,
 				user: {
@@ -69,7 +70,7 @@ class Auth {
 		try {
 			const user = await User.findOne({ _id: req.user.id });
 
-			const token = jwt.sign({ id: user._id }, config.get('secretKey'), { expiresIn: '1h' });
+			const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
 			return res.json({
 				token,
 				user: {

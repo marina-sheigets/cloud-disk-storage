@@ -1,10 +1,11 @@
 import fileService from '../services/fileService.js';
 import User from '../models/User.js';
 import File from '../models/File.js';
-import config from 'config';
 import fs from 'fs';
 import { SORTING } from '../constants/index.js';
 import { v4 as uuidv4 } from 'uuid';
+import 'dotenv/config';
+
 class FileController {
 	async createDir(req, res) {
 		try {
@@ -82,9 +83,9 @@ class FileController {
 
 			let path;
 			if (parent) {
-				path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`;
+				path = `${process.env.FILE_PATH}\\${user._id}\\${parent.path}\\${file.name}`;
 			} else {
-				path = `${config.get('filePath')}\\${user._id}\\${file.name}`;
+				path = `${process.env.FILE_PATH}\\${user._id}\\${file.name}`;
 			}
 
 			if (fs.existsSync(path)) {
@@ -166,7 +167,7 @@ class FileController {
 			let file = req.files.file;
 			const user = await User.findById(req.user.id);
 			const avatarName = uuidv4() + '.jpg';
-			file.mv(config.get('staticPath') + '\\' + avatarName);
+			file.mv(process.env.STATIC_PATH + '\\' + avatarName);
 			user.avatar = avatarName;
 			await user.save();
 			return res.json({ message: 'Avatar was saved', user });
@@ -179,7 +180,7 @@ class FileController {
 	async removeAvatar(req, res) {
 		try {
 			const user = await User.findById(req.user.id);
-			fs.unlinkSync(config.get('staticPath') + '\\' + user.avatar);
+			fs.unlinkSync(process.env.STATIC_PATH + '\\' + user.avatar);
 			user.avatar = null;
 			await user.save();
 			return res.json({ message: 'Avatar was removed', user });

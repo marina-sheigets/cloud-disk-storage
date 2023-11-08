@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import config from 'config';
+import 'dotenv/config';
 
 const auth = (req, res, next) => {
 	if (req.method === 'OPTIONS') {
@@ -11,7 +11,7 @@ const auth = (req, res, next) => {
 		if (!token) {
 			return req.status(401).json({ message: 'Auth error' });
 		}
-		const decoded = jwt.verify(token, config.get('secretKey'));
+		const decoded = jwt.verify(token, process.env.SECRET_KEY);
 		req.user = decoded;
 		next();
 	} catch (error) {
