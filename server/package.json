@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"start": "node index.js"
+		"start": "NODE_ENV=production node index.js",
+		"dev": "NODE_ENV=development nodemon index.js"
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",

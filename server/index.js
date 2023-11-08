@@ -15,7 +15,7 @@ app.use(express.static('static'));
 app.use('/api/auth', authRouter);
 app.use('/api/files', filesRouter);
 
-const PORT = config.get('serverPort');
+const PORT = config.get('serverPort') || 5000;
 const start = async () => {
 	try {
 		await mongoose.connect(config.get('dbURL'));
