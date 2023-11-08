@@ -3,8 +3,8 @@ import File from '../models/File.js';
 import 'dotenv/config';
 
 class FileService {
-	createDir(file) {
-		const filePath = `${process.env.FILE_PATH}\\${file.user}\\${file.path}`;
+	createDir(req, file) {
+		const filePath = this.getPath(req, file);
 		return new Promise((resolve, reject) => {
 			try {
 				if (!fs.existsSync(filePath)) {
@@ -20,8 +20,8 @@ class FileService {
 		});
 	}
 
-	deleteFile(file) {
-		const filePath = this.getPath(file);
+	deleteFile(req, file) {
+		const filePath = this.getPath(req, file);
 		if (file.type === 'dir') {
 			fs.rmdirSync(filePath);
 		} else {
@@ -29,8 +29,8 @@ class FileService {
 		}
 	}
 
-	getPath(file) {
-		return `${process.env.FILE_PATH}\\${file.user}\\${file.path}`;
+	getPath(req, file) {
+		return `${req.filePath}\\${file.user}\\${file.path}`;
 	}
 }
 

@@ -5,12 +5,14 @@ import filesRouter from './routes/file.routes.js';
 import corsMiddleware from './middleware/cors.js';
 import fileUpload from 'express-fileupload';
 import 'dotenv/config';
-
+import filePathMiddleware from './middleware/filePath.js';
+import path from 'path';
 const app = express();
 
 app.use(fileUpload({}));
 app.use(express.json());
 app.use(corsMiddleware);
+app.use(filePathMiddleware(path.resolve(__dirname, 'files')));
 app.use(express.static('static'));
 app.use('/api/auth', authRouter);
 app.use('/api/files', filesRouter);

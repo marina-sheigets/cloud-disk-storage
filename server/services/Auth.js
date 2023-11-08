@@ -25,7 +25,7 @@ class Auth {
 			const hashedPassword = await bcrypt.hash(password, 5);
 			const user = new User({ email, password: hashedPassword });
 			await user.save();
-			await fileService.createDir(new File({ user: user.id, name: '' }));
+			await fileService.createDir(req, new File({ user: user.id, name: '' }));
 			const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
 			return res.json({ message: 'User was created', user, token });
