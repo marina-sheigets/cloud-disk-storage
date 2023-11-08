@@ -167,7 +167,7 @@ class FileController {
 			let file = req.files.file;
 			const user = await User.findById(req.user.id);
 			const avatarName = uuidv4() + '.jpg';
-			file.mv(process.env.STATIC_PATH + '\\' + avatarName);
+			file.mv(req.staticPath + '\\' + avatarName);
 			user.avatar = avatarName;
 			await user.save();
 			return res.json({ message: 'Avatar was saved', user });
@@ -180,7 +180,7 @@ class FileController {
 	async removeAvatar(req, res) {
 		try {
 			const user = await User.findById(req.user.id);
-			fs.unlinkSync(process.env.STATIC_PATH + '\\' + user.avatar);
+			fs.unlinkSync(req.staticPath + '\\' + user.avatar);
 			user.avatar = null;
 			await user.save();
 			return res.json({ message: 'Avatar was removed', user });
