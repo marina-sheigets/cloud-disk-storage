@@ -1,0 +1,7 @@
+{
+	"serverPort": 5000,
+	"dbURL": "mongodb+srv://marinasejgec34:7laQQCvywOanvvyZ@cloud-disk-cluster.vfqxlwo.mongodb.net/",
+	"secretKey": "454234m2jkjkjk",
+	"filePath": "D:\\Projects\\cloud-storage\\server\\files",
+	"staticPath": "D:\\Projects\\cloud-storage\\server\\static"
+}
