@@ -7,6 +7,12 @@ import fileUpload from 'express-fileupload';
 import 'dotenv/config';
 import filePathMiddleware from './middleware/filePath.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
 
 app.use(fileUpload({}));
